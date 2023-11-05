@@ -1,29 +1,31 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Member;
-import com.example.demo.repository.MemberRepositoryV3;
+import com.example.demo.repository.MemberRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
-
 /**
- * 트랜잭션 - @Transactional AOP
+ * 예외 누수 문제 해결
+ * SQLException 제거
+ *
+ * MemberRepository 인터페이스 의존
  */
 @Slf4j
 @RequiredArgsConstructor
-public class MemberServiceV3_3 {
+public class MemberServiceV4 {
 
 
-    private final MemberRepositoryV3 memberRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
-    public void accountTransfer(String fromId, String toId, int money) throws SQLException {
+    public void accountTransfer(String fromId, String toId, int money) {
         bizLogic(fromId, toId, money);
     }
 
-    private void bizLogic(String fromId, String toId, int money) throws SQLException {
+    private void bizLogic(String fromId, String toId, int money) {
         Member fromMember = memberRepository.findById(fromId);
         Member toMember = memberRepository.findById(toId);
 

@@ -1,12 +1,10 @@
 package com.example.demo.service;
 
-
 import com.example.demo.domain.Member;
 import com.example.demo.repository.MemberRepositoryV1;
 import lombok.RequiredArgsConstructor;
 
 import java.sql.SQLException;
-
 @RequiredArgsConstructor
 public class MemberServiceV1 {
 
