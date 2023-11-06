@@ -81,29 +81,25 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
 
     @Override
     public List<Item> findAll(ItemSearchCond cond) {
-        String itemName = cond.getItemName();
         Integer maxPrice = cond.getMaxPrice();
+        String itemName = cond.getItemName();
         SqlParameterSource param = new BeanPropertySqlParameterSource(cond);
         String sql = "select id, item_name, price, quantity from item";
-
-        // 동적쿼리
-        if(StringUtils.hasText(itemName) || maxPrice != null){
-            sql += "where";
+        //동적 쿼리
+        if (StringUtils.hasText(itemName) || maxPrice != null) {
+            sql += " where";
         }
-
         boolean andFlag = false;
-        if(StringUtils.hasText(itemName)) {
-            sql += "item_name like concat('%',:itemName,'%')";
+        if (StringUtils.hasText(itemName)) {
+            sql += " item_name like concat('%',:itemName,'%')";
             andFlag = true;
         }
-
-        if (maxPrice != null){
+        if (maxPrice != null) {
             if (andFlag) {
-                sql += "and";
+                sql += " and";
             }
             sql += " price <= :maxPrice";
         }
-
         log.info("sql={}", sql);
         return template.query(sql, param, itemRowMapper());
     }
