@@ -118,7 +118,7 @@ public class BasicTxTest {
         log.info("내부 트랜잭션 시작");
         TransactionStatus inner = txManager.getTransaction(new DefaultTransactionAttribute());
         log.info("내부 트랜잭션 롤백");
-        txManager.rollback(inner);
+        txManager.rollback(inner); //롤백
 
         log.info("외부 트랜잭션 커밋");
         Assertions.assertThatThrownBy(() -> txManager.commit(outer))
